@@ -51,7 +51,7 @@ router.post("/deleteReport",auth,isAuthenticate,deleteCloudEvent)
 router.post("/createEvent",auth,isAuthenticate,createEvent)
 router.post("/updteEvent",auth,isAuthenticate,updateReport)
 router.post("/deleteEvent",auth,isAuthenticate,deleteEvent)
-router.post("getAllevents",auth,isAuthenticate,getAllEvents);
+router.post("/getAllevents",auth,isAuthenticate,getAllEvents);
 
 router.post("/getAllReportsRequest",auth,getAllEvents)
 router.post("/cloudUpload",auth,isAuthenticate,createEvent);
@@ -65,4 +65,5 @@ router.post("/getAllHighlight",auth,getAllHighlights);
 
 router.post("/contactus",createcontactus);
 router.post("/getallcontactrequest",auth,isAdmin,getAllContactRequest);
+
 module.exports=router;
