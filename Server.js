@@ -14,7 +14,8 @@ app.use(bodyParser.json());
 app.use(express.json());
 // app.use(cookieParser())
 
-const allowedOrigins = ['https://sdss-portal.netlify.app/', 'http://localhost:3000'];
+const allowedOrigins = ['https://sdss-portal.netlify.app', 'http://localhost:3000'];
+
 
 // app.use(
 //  cors({
@@ -30,8 +31,13 @@ app.use(cors({
     } else {
       callback(new Error('Not allowed by CORS'));
     }
+  },
+  // Handle errors from CORS middleware
+  onError: function(err, req, res, next) {
+    res.status(403).json({ error: 'Origin not allowed' });
   }
 }));
+
 
 app.use(fileUpload({
     useTempFiles:true,
@@ -45,21 +51,3 @@ app.listen(port,(req,res)=>{
 cloudinaryConnect();
 app.use("/v1/user",userRouter);
 app.use("/v1/profile/personalProfile",personalProfileRouter);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
