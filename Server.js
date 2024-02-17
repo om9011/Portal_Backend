@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 // app.use(cookieParser())
 
-const allowedOrigins = ['https://master--beautiful-daifuku-e746ff.netlify.app', 'http://localhost:3000'];
+const allowedOrigins = ['https://sdss-portal.netlify.app/', 'http://localhost:3000'];
 
 // app.use(
 //  cors({
