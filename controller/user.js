@@ -158,6 +158,17 @@ exports.login = async (req, res) => {
       token = await jwt.sign(payload, "token", {
         expiresIn: "24hr",
       });
+      const options = {
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+   httpOnly: true,
+   sameSite: "None",  // set appropriately based on your requirements
+   secure: true, 
+      }
+      res.cookie("token",token,options).status(200).json({
+        message: "User Login sucessfully",
+        user: findUser,
+        token: token,
+      });
     } else {
       return res.status(404).json({
         message: "Password dosent match",
@@ -165,11 +176,11 @@ exports.login = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      message: "User Login sucessfully",
-      user: findUser,
-      token: token,
-    });
+    // return res.status(200).json({
+    //   message: "User Login sucessfully",
+    //   user: findUser,
+    //   token: token,
+    // });
   } catch (e) {
     console.log("ERROR AT LOGIN", e.message);
   }

@@ -1,15 +1,16 @@
 const jwt = require("jsonwebtoken");
 exports.auth = (req, res, next) => {
   try {
-    const { token } = req.body;
+    // const { token } = req.body || req.cookie.token;
+    const token = req.body.token || req.cookies.token;
 
     const result = jwt.verify(token, "token");
     console.log(result);
     console.log("User Role :", result.role);
-
+    console.log("Cookies",req.cookies)
     // add token at
     req.user = result;
-
+    // console.log("Cookies at auth ",req)
     // return res.status(200).json({
     //     message:"Token decoded sucessfully",
     //     token:result
