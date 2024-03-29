@@ -24,12 +24,13 @@ const allowedOrigins = ['https://sdss-portal.netlify.app', 'http://localhost:300
 //  })   
 // )
 
-app.use(
-	cors({
-		origin: "*",
-		credentials: true,
-	})
-);
+app.use(cors({
+  origin: "",
+  // Handle errors from CORS middleware
+  onError: function(err, req, res, next) {
+    res.status(403).json({ error: 'Origin not allowed' });
+  }
+}));
 
 
 app.use(fileUpload({
