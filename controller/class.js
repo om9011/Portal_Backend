@@ -18,7 +18,7 @@ exports.createClass=async(req,res)=>{
         // check if class is already preasent or not
         const checkClass= await Class.findOne({classsName:classsName})
 
-        if(checkClass){
+        if(checkClass.length>0){
             return res.status(400).json({
                 message:"This class is already prsent "
             })
