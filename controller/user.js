@@ -85,7 +85,7 @@ exports.signUp = async (req, res) => {
     message:"Class Not present"})
     // creating entry in DB
     const user = await User.create({
-      id: recordCount + 1000,
+      id: id,
       firstName,
       lastName,
       contact,
