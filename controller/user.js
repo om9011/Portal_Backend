@@ -194,6 +194,35 @@ exports.login = async (req, res) => {
   }
 };
 
+
+
+
+exports.getStudentByRollNo=async(req,res)=>{
+
+  try{
+    console.log("Hello")
+      const{rollno}=req.body;
+
+      if(!rollno){
+        return res.status(400).json({
+          message:"Roll no not passed"
+        });
+      }
+      const  result= await User.find({id:rollno}).populate("personalProfile")
+      .populate("familyProfile")
+      .populate("academicProfile")
+      .populate("attendance")
+      .populate("class");
+
+
+      return res.status(200).json({
+        data:result,
+        message:"User found by id"
+      })
+  }catch(e){
+    console.log("ERRROR AT GET STUDENT BY ROLL NO: ",e);
+  }
+}
 exports.getStudent = async (req, res) => {
   try {
     const id = req.user.id;
