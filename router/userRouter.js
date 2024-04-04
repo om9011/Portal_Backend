@@ -25,7 +25,7 @@ router.post("/getAllOperators",auth,isAuthenticate,getAllOperators)
 router.post("/getStudentByRollNo",auth,isAuthenticate,getStudentByRollNo)
 
 // ROutes for operator and admin
-router.post("/markAttendece",auth,isAuthenticate,isAdmin,markAttendece)
+router.post("/markAttendece",auth,isAuthenticate,markAttendece)
 router.post("/getStudentAttendece",auth,getStudentIndivualAttendence);
 router.post("/createClass",auth,isAuthenticate,isAdmin,createClass)
 router.post("/dailyUpdate",auth,isAuthenticate,markDailyClassUpdate)
