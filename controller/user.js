@@ -14,10 +14,10 @@ const requetsDB = require("../db/requestDB");
 // signup
 exports.signUp = async (req, res) => {
   try {
-    const { firstName, lastName, contact, email, password, role,standard} = req.body;
+    const { id,firstName, lastName, contact, email, password, role,standard} = req.body;
 
     // validation of input
-    if (!firstName || !lastName || !contact || !email || !password || !standard) {
+    if (!id || !firstName || !lastName || !contact || !email || !password || !standard) {
       return res.status(400).json({
         messsage: "Something is missing at signup",
         sucess: false,
@@ -37,6 +37,14 @@ exports.signUp = async (req, res) => {
         sucess: false,
       });
     }
+    const useid= await User.find({id:id});
+    if (useid.length > 0) {
+      return res.status(400).json({
+        message: "User Roll No is already Present",
+        sucess: false,
+      });
+    }
+
     const hashPassword = await bcrypt.hash(password, 10);
 
     // create 4 schma and init with NULL
