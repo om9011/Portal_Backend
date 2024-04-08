@@ -16,13 +16,14 @@ exports.createClass=async(req,res)=>{
         const updateInFileFormate="No Update"
 
         // check if class is already preasent or not
-        const checkClass= await Class.findOne({classsName:classsName})
+        const checkClass = await Class.findOne({ classsName: classsName });
 
-        if(checkClass){
+        if (checkClass) {
             return res.status(400).json({
-                message:"This class is already prsent "
-            })
+                message: "This class is already present"
+            });
         }
+        
 
         const createClass= await Class.create({classsName:classsName,classTeacher:classTeacher,studentList:studentList,updateForClass:updateForClass,updateInFileFormate:updateInFileFormate});
 
