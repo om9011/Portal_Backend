@@ -1,7 +1,5 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const db = require("./config/db");
 const app = express();
 const cors=require("cors")
 const port = process.env.PORT || 4000;
@@ -12,17 +10,7 @@ const { cloudinaryConnect } = require("./config/cloundinary");
 require("dotenv").config();
 app.use(bodyParser.json());
 app.use(express.json());
-// app.use(cookieParser())
 
-const allowedOrigins = ['https://sdss-portal.netlify.app', 'http://localhost:3000'];
-
-
-// app.use(
-//  cors({
-//     origin:'http://localhost:3000',
-//     credentials:true
-//  })   
-// )
 
 app.use(
 	cors({

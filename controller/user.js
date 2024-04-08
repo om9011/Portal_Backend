@@ -14,7 +14,7 @@ const requetsDB = require("../db/requestDB");
 // signup
 exports.signUp = async (req, res) => {
   try {
-    const { id,firstName, lastName, contact, email, password, role,standard} = req.body;
+    const { id, firstName, lastName, contact, email, password, role, standard } = req.body;
 
     // validation of input
     if (!id || !firstName || !lastName || !contact || !email || !password || !standard) {
@@ -37,7 +37,7 @@ exports.signUp = async (req, res) => {
         sucess: false,
       });
     }
-    const useid= await User.find({id:id});
+    const useid = await User.find({ id: id });
     if (useid.length > 0) {
       return res.status(400).json({
         message: "User Roll No is already Present",
@@ -76,13 +76,14 @@ exports.signUp = async (req, res) => {
       attendance: [null],
     });
 
-    
-    const result= await Class.findOne({classsName:standard});
-    console.log("result of class",result);
+
+    const result = await Class.findOne({ classsName: standard });
+    console.log("result of class", result);
     console.log(result)
-    if(!result)
+    if (!result)
       return res.status(404).json({
-    message:"Class Not present"})
+        message: "Class Not present"
+      })
     // creating entry in DB
     const user = await User.create({
       id: id,
@@ -96,18 +97,18 @@ exports.signUp = async (req, res) => {
       familyProfile,
       academicProfile,
       attendance: attendence,
-      class:result._id
+      class: result._id
     });
 
     // console.log("RESULT OF CLASS ",result)
-    console.log("User,",user._id+"")
+    console.log("User,", user._id + "")
     // if(result.length==0){
     //   return res.status(404).json({
     //     message:"Invalid class"
     //   })
     // }
     // // add the student in class
-    result.studentList.push(user._id+"");
+    result.studentList.push(user._id + "");
     await result.save();
 
     // console.log(user.email);
@@ -164,15 +165,15 @@ exports.login = async (req, res) => {
 
       // creating token
       token = await jwt.sign(payload, "token", {
-        expiresIn: "24hr",
+        expiresIn: "5d",
       });
       const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-   httpOnly: true,
-   sameSite: "None",  // set appropriately based on your requirements
-   secure: true, 
+        expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+        sameSite: "None",  // set appropriately based on your requirements
+        secure: true,
       }
-      res.cookie("token",token,options).status(200).json({
+      res.cookie("token", token, options).status(200).json({
         message: "User Login sucessfully",
         user: findUser,
         token: token,
@@ -197,30 +198,30 @@ exports.login = async (req, res) => {
 
 
 
-exports.getStudentByRollNo=async(req,res)=>{
+exports.getStudentByRollNo = async (req, res) => {
 
-  try{
+  try {
     console.log("Hello")
-      const{rollno}=req.body;
+    const { rollno } = req.body;
 
-      if(!rollno){
-        return res.status(400).json({
-          message:"Roll no not passed"
-        });
-      }
-      const  result= await User.find({id:rollno}).populate("personalProfile")
+    if (!rollno) {
+      return res.status(400).json({
+        message: "Roll no not passed"
+      });
+    }
+    const result = await User.find({ id: rollno }).populate("personalProfile")
       .populate("familyProfile")
       .populate("academicProfile")
       .populate("attendance")
       .populate("class");
 
 
-      return res.status(200).json({
-        data:result,
-        message:"User found by id"
-      })
-  }catch(e){
-    console.log("ERRROR AT GET STUDENT BY ROLL NO: ",e);
+    return res.status(200).json({
+      data: result,
+      message: "User found by id"
+    })
+  } catch (e) {
+    console.log("ERRROR AT GET STUDENT BY ROLL NO: ", e);
   }
 }
 exports.getStudent = async (req, res) => {
